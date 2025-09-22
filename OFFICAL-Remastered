@@ -1,0 +1,1003 @@
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+
+local Window = WindUI:CreateWindow({
+    Title = "Elite Hub (Grow a Garden) | Remastered",
+    Icon = "rbxassetid://129260712070622",
+    IconThemed = true,
+    Author = "Dreamyzone",
+    Folder = "Elitehub_GrowAGarden",
+    Size = UDim2.fromOffset(580, 460),
+    Transparent = true,
+    Theme = "Dark",
+    KeySystem = {
+        Key = { "Elite_GAG1473890", "HugoSpecialkey" },
+        Note = "Complete the key to unlock Grow a Garden features.",
+        URL = "https://discord.gg/9V3ZSzdV4V",
+        SaveKey = true,
+    }
+})
+
+-- ✅ Tabs
+local Tabs = {
+    Main = Window:Tab({ Title = "Main", Icon = "leaf", Desc = "Grow a Garden Features" }),
+    AutoBuySeeds = Window:Tab({ Title = "Auto Buy Seeds", Icon = "shopping-cart", Desc = "Auto seed purchases" }),
+    AutoBuyGears = Window:Tab({ Title = "Auto Buy Gears", Icon = "wrench", Desc = "Auto Gear purchases" }),
+    Settings = Window:Tab({ Title = "Settings", Icon = "cog", Desc = "Client Tweaks" }),
+}
+
+Tabs.Main:Button({
+    Title = "Sell Inventory",
+    Desc = "Sells your entire inventory instantly",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local Sell_Inventory = ReplicatedStorage.GameEvents:WaitForChild("Sell_Inventory")
+        pcall(function()
+            Sell_Inventory:FireServer()
+        end)
+    end
+})
+
+local infJumpEnabled = false
+local UIS = game:GetService("UserInputService")
+local Player = game:GetService("Players").LocalPlayer
+
+Tabs.Main:Toggle({
+    Title = "Infinite Jump",
+    Desc = "Lets you jump infinitely",
+    Default = false,
+    Callback = function(state)
+        infJumpEnabled = state
+    end
+})
+
+UIS.JumpRequest:Connect(function()
+    if infJumpEnabled and Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") then
+        Player.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+    end
+end)
+
+local Player = game:GetService("Players").LocalPlayer
+local Humanoid = Player.Character and Player.Character:FindFirstChildOfClass("Humanoid")
+
+-- Update Humanoid on character respawn
+Player.CharacterAdded:Connect(function(char)
+    Humanoid = char:WaitForChild("Humanoid")
+end)
+
+Tabs.Main:Slider({
+    Title = "WalkSpeed",
+    Desc = "Adjust your walking speed",
+    Default = 16,
+    Min = 16,
+    Max = 200,
+    Callback = function(value)
+        if Humanoid then
+            Humanoid.WalkSpeed = value
+        end
+    end
+})
+
+Tabs.Main:Paragraph({
+    Title = "More shit coming soon! until then please use the other features",
+    Content = "Elite Hub for Grow a Garden. Auto-buy, farming tools & more coming soon."
+})
+
+-- Auto Buy Carrot Seeds
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Carrot Seed",
+    Desc = "Buys Carrot Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Carrot")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Strawberry Seed",
+    Desc = "Buys Strawberry Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Strawberry")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Blueberry Seed",
+    Desc = "Buys Blueberry Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Blueberry")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Tomato Seed",
+    Desc = "Buys Tomato Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Tomato")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Daffodil Seed",
+    Desc = "Buys Daffodil Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Daffodil")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Corn Seed",
+    Desc = "Buys Corn Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Corn")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Watermelon Seed",
+    Desc = "Buys Watermelon Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Watermelon")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Pumpkin Seed",
+    Desc = "Buys Pumpkin Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Pumpkin")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Apple Seed",
+    Desc = "Buys Apple Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Apple")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Bamboo Seed",
+    Desc = "Buys Bamboo Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Bamboo")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Coconut Seed",
+    Desc = "Buys Coconut Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Coconut")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Cactus Seed",
+    Desc = "Buys Cactus Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Cactus")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Dragonfruit Seed",
+    Desc = "Buys Dragonfruit Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "DragonFruit")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Mango Seed",
+    Desc = "Buys Mango Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Mango")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Grape Seed",
+    Desc = "Buys Grape Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Grape")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Mushroom Seed",
+    Desc = "Buys Mushroom Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Mushroom")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Cacao Seed",
+    Desc = "Buys Cacao Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Cacao")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Pepper Seed",
+    Desc = "Buys Pepper Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Pepper")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Beanstalk Seed",
+    Desc = "Buys Beanstalk Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Beanstalk")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Ember lilly Seed",
+    Desc = "Buys Ember lilly Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Ember Lily")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Sugar apple Seed",
+    Desc = "Buys Sugar apple Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Sugar Apple")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyEnabled = false
+local autoBuyConnection
+
+Tabs.AutoBuySeeds:Toggle({
+    Title = "Auto Buy Giantpinecone Seed",
+    Desc = "Buys Giantpinecone Seeds every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuySeedStock = ReplicatedStorage.GameEvents:WaitForChild("BuySeedStock")
+
+        if state then
+            autoBuyConnection = task.spawn(function()
+                while autoBuyEnabled do
+                    pcall(function()
+                        BuySeedStock:FireServer("Tier 1", "Giant Pinecone")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Watering Can",
+    Desc = "Buys Watering Can every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Watering Can")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Recall Wrench",
+    Desc = "Buys Recall Wrench every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Recall Wrench")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Trading Ticket",
+    Desc = "Buys Trading Ticket every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Trading Ticket")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Medium Toy",
+    Desc = "Buys Medium Toy every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Medium Toy")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Medium Treat",
+    Desc = "Buys Medium Treat every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Medium Treat")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Basic Sprinkler",
+    Desc = "Buys Basic Sprinkler every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Basic Sprinkler")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Advanced Sprinkler",
+    Desc = "Buys Advanced Sprinkler every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Advanced Sprinkler")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Godly Sprinkler",
+    Desc = "Buys Godly Sprinkler every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Godly Sprinkler")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Master Sprinkler",
+    Desc = "Buys Master Sprinkler every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Master Sprinkler")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Grandmaster Sprinkler",
+    Desc = "Buys Grandmaster Sprinkler every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Grandmaster Sprinkler")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+}) 
+
+local autoBuyGearEnabled = false
+local autoBuyGearConnection
+
+Tabs.AutoBuyGears:Toggle({
+    Title = "Auto Buy Levelup Lollipop",
+    Desc = "Buys Levelup Lollipop every 1 second",
+    Default = false,
+    Callback = function(state)
+        autoBuyGearEnabled = state
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local BuyGearStock = ReplicatedStorage.GameEvents:WaitForChild("BuyGearStock")
+
+        if state then
+            autoBuyGearConnection = task.spawn(function()
+                while autoBuyGearEnabled do
+                    pcall(function()
+                        BuyGearStock:FireServer("Levelup Lollipop")
+                    end)
+                    task.wait(1)
+                end
+            end)
+        else
+            autoBuyGearEnabled = false
+        end
+    end
+})
+
+Tabs.Settings:Button({
+    Title = "Anti-Lag",
+    Desc = "Removes textures/particles to reduce lag",
+    Callback = function()
+        for _, v in pairs(workspace:GetDescendants()) do
+            if v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Enabled = false
+            elseif v:IsA("Explosion") then
+                v:Destroy()
+            elseif v:IsA("Decal") or v:IsA("Texture") then
+                v:Destroy()
+            elseif v:IsA("MeshPart") and v.Material ~= Enum.Material.SmoothPlastic then
+                v.Material = Enum.Material.SmoothPlastic
+            elseif v:IsA("BasePart") then
+                v.Reflectance = 0
+            end
+        end
+
+        -- Lower lighting settings
+        local Lighting = game:GetService("Lighting")
+        Lighting.GlobalShadows = false
+        Lighting.FogEnd = 9e9
+        Lighting.Brightness = 0
+
+        print("Anti-Lag Applied!")
+    end
+})
